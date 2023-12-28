@@ -13,7 +13,7 @@ exports.verifyToken = async (req, res, next) => {
       token,
       process.env.TOKEN_SECRET
     );
-
+    console.log({ decoded });
     const user = await findUserByEmailService(decoded.email);
     req.user = user;
     next();
