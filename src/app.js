@@ -3,20 +3,14 @@ const app = express();
 const cors = require("cors");
 
 app.use(express.json());
-// app.use(cors(["https://job-portal-eosin.vercel.app"]));
+app.use(cors());
 
-// // import routes
-// const jobRoute = require("./routes/job.route");
-// const userRoute = require("./routes/user.route");
-// const blogRoute = require("./routes/blog.route");
+const { userRoutes } = require("./app/module/user/user.route");
 
-// routes
 app.get("/", (req, res) => {
   res.send("Route is working! YaY!");
 });
 
-// app.use("/api/v1", jobRoute);
-// app.use("/api/v1/user", userRoute);
-// app.use("/api/v1/blog", blogRoute);
+app.use("/api/v1/user", userRoutes);
 
 module.exports = app;

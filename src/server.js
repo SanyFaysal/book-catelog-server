@@ -4,7 +4,7 @@ const dotenv = require("dotenv").config();
 const app = require("./app");
 
 mongoose.connect(process.env.DATABASE).then(() => {
-  console.log(`Database is connected successfuly`);
+  console.log(`Database is connected successfully`);
 });
 
 const port = process.env.PORT || 8080;
