@@ -9,10 +9,18 @@ exports.getBooksService = async (data) => {
   return result;
 };
 exports.getBookByIdService = async (bookId) => {
-  const result = await Book.findOne({ _id: bookId });
+  const result = await Book.findOne({ _id: bookId }).populate(
+    "reviews",
+    "reviews.$.reviewed_by"
+  );
   return result;
 };
-exports.addReview = async (bookId, data) => {
-  const result = await Book.findOne({ _id: bookId });
+exports.addReviewService = async (bookId, data) => {
+  const result = await Book.updateOne(
+    { _id: bookId },
+    {
+      $push: { reviews: data },
+    }
+  );
   return result;
 };

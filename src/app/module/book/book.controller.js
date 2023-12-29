@@ -4,6 +4,7 @@ const {
   addBookService,
   getBooksService,
   getBookByIdService,
+  addReviewService,
 } = require("./book.service");
 
 exports.addBook = tryCatchHelper(async (req, res) => {
@@ -24,6 +25,22 @@ exports.getBooks = tryCatchHelper(async (req, res) => {
 exports.getBookById = tryCatchHelper(async (req, res) => {
   const { bookId } = req.params;
   const result = await getBookByIdService(bookId);
+  return successResponse({
+    res,
+    code: 200,
+    message: "Fetched successful",
+    data: result,
+  });
+});
+exports.addReview = tryCatchHelper(async (req, res) => {
+  const { bookId } = req.params;
+  const data = req.body;
+  const { _id } = req.user;
+  const reviewData = {
+    reviewed_by: _id,
+    ...data,
+  };
+  const result = await addReviewService(bookId, reviewData);
   return successResponse({
     res,
     code: 200,
