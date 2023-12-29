@@ -7,6 +7,8 @@ const {
   addReviewService,
   editBookService,
   deleteBookService,
+  getAllGenreService,
+  getAllPublicationYearService,
 } = require("./book.service");
 
 exports.addBook = tryCatchHelper(async (req, res) => {
@@ -16,7 +18,9 @@ exports.addBook = tryCatchHelper(async (req, res) => {
   return successResponse({ res, code: 200, message: "Added successful" });
 });
 exports.getBooks = tryCatchHelper(async (req, res) => {
-  const result = await getBooksService();
+  const query = req.query;
+
+  const result = await getBooksService(query);
   return successResponse({
     res,
     code: 200,
@@ -69,6 +73,25 @@ exports.addReview = tryCatchHelper(async (req, res) => {
     res,
     code: 200,
     message: "Fetched successful",
+    data: result,
+  });
+});
+
+exports.getAllGenre = tryCatchHelper(async (req, res) => {
+  const result = await getAllGenreService();
+  return successResponse({
+    res,
+    code: 200,
+    message: "successful",
+    data: result,
+  });
+});
+exports.getAllPublicationYearService = tryCatchHelper(async (req, res) => {
+  const result = await getAllPublicationYearService();
+  return successResponse({
+    res,
+    code: 200,
+    message: "successful",
     data: result,
   });
 });

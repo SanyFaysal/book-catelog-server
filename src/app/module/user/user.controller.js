@@ -49,7 +49,7 @@ exports.login = tryCatchHelper(async (req, res) => {
   const userData = {
     email: user?.email,
     fullName: user?.fullName,
-    _id: user?.fullName,
+    _id: user?._id,
   };
   return successResponse({
     res,

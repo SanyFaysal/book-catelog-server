@@ -4,8 +4,28 @@ exports.addBookService = async (data) => {
   const result = await Book.create(data);
   return result;
 };
-exports.getBooksService = async (data) => {
-  const result = await Book.find({});
+exports.getBooksService = async (query) => {
+  let filterQuery = {};
+
+  if (query?.searchTerm) {
+    filterQuery.$or = [
+      { title: { $regex: query?.searchTerm, $options: "i" } },
+      { genre: { $regex: query?.searchTerm, $options: "i" } },
+      { author: { $regex: query?.searchTerm, $options: "i" } },
+      { publication_year: { $regex: query?.searchTerm, $options: "i" } },
+    ];
+  }
+
+  if (query?.genre) {
+    if (query?.genre === "all") delete filterQuery.genre;
+    else filterQuery.genre = query?.genre;
+  }
+  if (query?.publication_year) {
+    if (query?.publication_year === "all") delete filterQuery.publication_year;
+    else filterQuery.publication_year = query?.publication_year;
+  }
+
+  const result = await Book.find(filterQuery);
   return result;
 };
 exports.getBookByIdService = async (bookId) => {
@@ -17,6 +37,7 @@ exports.getBookByIdService = async (bookId) => {
     });
   return result;
 };
+
 exports.editBookService = async (bookId, data) => {
   const result = await Book.updateOne({ _id: bookId }, data);
   return result;
@@ -32,5 +53,14 @@ exports.addReviewService = async (bookId, data) => {
       $push: { reviews: data },
     }
   );
+  return result;
+};
+
+exports.getAllGenreService = async () => {
+  const result = await Book.distinct("genre");
+  return result;
+};
+exports.getAllPublicationYearService = async () => {
+  const result = await Book.distinct("publication_year");
   return result;
 };

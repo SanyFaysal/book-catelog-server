@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 const { findUserByEmailService } = require("../module/user/user.service");
+const { errorResponse } = require("../utils/response");
 
 exports.verifyToken = async (req, res, next) => {
   try {
@@ -17,5 +18,7 @@ exports.verifyToken = async (req, res, next) => {
     const user = await findUserByEmailService(decoded.email);
     req.user = user;
     next();
-  } catch (error) {}
+  } catch (error) {
+    errorResponse({ res, code: 400, error: error.message });
+  }
 };
