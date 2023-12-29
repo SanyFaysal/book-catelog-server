@@ -11,7 +11,8 @@ router.patch("/add-review/:bookId", verifyToken, bookController.addReview);
 router
   .route("/:bookId")
   .get(bookController.getBookById)
-  .patch(verifyToken, checkIsOwner, bookController.editBook);
+  .patch(verifyToken, checkIsOwner, bookController.editBook)
+  .delete(verifyToken, checkIsOwner, bookController.deleteBook);
 
 module.exports = {
   bookRoutes: router,

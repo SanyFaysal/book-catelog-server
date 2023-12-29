@@ -21,6 +21,10 @@ exports.editBookService = async (bookId, data) => {
   const result = await Book.updateOne({ _id: bookId }, data);
   return result;
 };
+exports.deleteBookService = async (bookId) => {
+  const result = await Book.deleteOne({ _id: bookId });
+  return result;
+};
 exports.addReviewService = async (bookId, data) => {
   const result = await Book.updateOne(
     { _id: bookId },

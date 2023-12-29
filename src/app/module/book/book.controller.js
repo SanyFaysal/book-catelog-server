@@ -6,6 +6,7 @@ const {
   getBookByIdService,
   addReviewService,
   editBookService,
+  deleteBookService,
 } = require("./book.service");
 
 exports.addBook = tryCatchHelper(async (req, res) => {
@@ -44,6 +45,15 @@ exports.editBook = tryCatchHelper(async (req, res) => {
     code: 200,
     message: "Edited successful",
     data: result,
+  });
+});
+exports.deleteBook = tryCatchHelper(async (req, res) => {
+  const { bookId } = req.params;
+  await deleteBookService(bookId);
+  return successResponse({
+    res,
+    code: 200,
+    message: "Deletion successful",
   });
 });
 exports.addReview = tryCatchHelper(async (req, res) => {
