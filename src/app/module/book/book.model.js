@@ -41,6 +41,10 @@ const bookSchema = mongoose.Schema({
         type: ObjectId,
         ref: "User",
       },
+      created_at: {
+        type: Date,
+        default: Date.now(),
+      },
     },
   ],
 });

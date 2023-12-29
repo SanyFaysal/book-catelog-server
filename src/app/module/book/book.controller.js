@@ -1,6 +1,10 @@
 const { successResponse } = require("../../utils/response");
 const { tryCatchHelper } = require("../../utils/tryCatchHelper");
-const { addBookService, getBooksService } = require("./book.service");
+const {
+  addBookService,
+  getBooksService,
+  getBookByIdService,
+} = require("./book.service");
 
 exports.addBook = tryCatchHelper(async (req, res) => {
   const data = req.body;
@@ -10,6 +14,16 @@ exports.addBook = tryCatchHelper(async (req, res) => {
 });
 exports.getBooks = tryCatchHelper(async (req, res) => {
   const result = await getBooksService();
+  return successResponse({
+    res,
+    code: 200,
+    message: "Fetched successful",
+    data: result,
+  });
+});
+exports.getBookById = tryCatchHelper(async (req, res) => {
+  const { bookId } = req.params;
+  const result = await getBookByIdService(bookId);
   return successResponse({
     res,
     code: 200,
