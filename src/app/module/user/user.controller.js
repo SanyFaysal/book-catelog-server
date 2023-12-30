@@ -77,3 +77,13 @@ exports.getMe = tryCatchHelper(async (req, res) => {
     data: result,
   });
 });
+
+
+const ob = [
+  {genre:'Myster'},
+  {genre: "Fiction"},
+  {genre:"Science"},
+  {genre:"Fiction"},
+  {genre:"fantastic"},
+  {genre:"Science"}
+]

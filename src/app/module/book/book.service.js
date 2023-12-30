@@ -6,7 +6,6 @@ exports.addBookService = async (data) => {
 };
 exports.getBooksService = async (query) => {
   let filterQuery = {};
-
   if (query?.searchTerm) {
     filterQuery.$or = [
       { title: { $regex: query?.searchTerm, $options: "i" } },
@@ -24,9 +23,15 @@ exports.getBooksService = async (query) => {
     if (query?.publication_year === "all") delete filterQuery.publication_year;
     else filterQuery.publication_year = query?.publication_year;
   }
-
-  const result = await Book.find(filterQuery);
-  return result;
+  if (query?.limit) {
+    const result = await Book.find(filterQuery)
+      .sort({ created_at: -1 })
+      .limit(parseInt(query?.limit));
+    return result;
+  } else {
+    const result = await Book.find(filterQuery);
+    return result;
+  }
 };
 exports.getBookByIdService = async (bookId) => {
   const result = await Book.findOne({ _id: bookId })
