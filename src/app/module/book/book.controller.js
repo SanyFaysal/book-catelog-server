@@ -14,8 +14,13 @@ const {
 exports.addBook = tryCatchHelper(async (req, res) => {
   const data = req.body;
   const { _id: added_by } = req.user;
-  await addBookService({ ...data, added_by });
-  return successResponse({ res, code: 200, message: "Added successful" });
+  const result = await addBookService({ ...data, added_by });
+  return successResponse({
+    res,
+    code: 200,
+    message: "Added successful",
+    data: result,
+  });
 });
 exports.getBooks = tryCatchHelper(async (req, res) => {
   const query = req.query;

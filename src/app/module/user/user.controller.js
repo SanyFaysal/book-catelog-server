@@ -1,7 +1,11 @@
 const { successResponse, errorResponse } = require("../../utils/response");
 const { generateToken } = require("../../utils/token");
 const { tryCatchHelper } = require("../../utils/tryCatchHelper");
-const { findUserByEmailService, signupService } = require("./user.service");
+const {
+  findUserByEmailService,
+  signupService,
+  addWishlistService,
+} = require("./user.service");
 
 exports.signup = tryCatchHelper(async (req, res) => {
   const data = req.body;
@@ -78,12 +82,15 @@ exports.getMe = tryCatchHelper(async (req, res) => {
   });
 });
 
-
-const ob = [
-  {genre:'Myster'},
-  {genre: "Fiction"},
-  {genre:"Science"},
-  {genre:"Fiction"},
-  {genre:"fantastic"},
-  {genre:"Science"}
-]
+exports.addWishlist = tryCatchHelper(async (req, res) => {
+  const { _id } = req.user;
+  const userId = _id?.toString();
+  const { bookId } = req.params;
+  const result = await addWishlistService(userId, bookId);
+  return successResponse({
+    res,
+    code: 200,
+    message: "successfully get data",
+    data: result,
+  });
+});

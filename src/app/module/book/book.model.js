@@ -48,13 +48,13 @@ const bookSchema = mongoose.Schema(
         },
       },
     ],
-    created_at: {
+    createdAt: {
       type: Date,
-      default: Date.now(),
+      default: Date.now,
     },
   },
   {
-    timeStamps: true,
+    timeStamps: { createdAt: "createdAt", updatedAt: "updatedAt" },
   }
 );
 

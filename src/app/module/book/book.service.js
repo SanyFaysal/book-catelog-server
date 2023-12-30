@@ -24,8 +24,8 @@ exports.getBooksService = async (query) => {
     else filterQuery.publication_year = query?.publication_year;
   }
   if (query?.limit) {
-    const result = await Book.find(filterQuery)
-      .sort({ created_at: -1 })
+    const result = await Book.find()
+      .sort({ createdAt: "desc" })
       .limit(parseInt(query?.limit));
     return result;
   } else {
