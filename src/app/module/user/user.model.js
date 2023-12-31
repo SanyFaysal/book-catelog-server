@@ -3,7 +3,7 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const {
   READ_LATER,
-  CURRENTLY_READING,
+  READING_NOW,
   ALREADY_READ,
   READ_SOON,
 } = require("../../constants/wishlistBookStatus");
@@ -29,7 +29,7 @@ const userSchema = mongoose.Schema({
     required: true,
     message: "Please enter a password",
   },
-  wishList: [
+  wishlist: [
     {
       book: {
         type: ObjectId,
@@ -39,7 +39,7 @@ const userSchema = mongoose.Schema({
         type: String,
         default: READ_LATER,
         enum: {
-          values: [READ_LATER, CURRENTLY_READING, ALREADY_READ, READ_SOON],
+          values: [READ_LATER, READING_NOW, ALREADY_READ, READ_SOON],
           message: "{VALUE} can't be a status",
         },
       },

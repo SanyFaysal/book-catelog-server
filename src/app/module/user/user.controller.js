@@ -5,6 +5,8 @@ const {
   findUserByEmailService,
   signupService,
   addWishlistService,
+  removeWishlistService,
+  updateWishlistService,
 } = require("./user.service");
 
 exports.signup = tryCatchHelper(async (req, res) => {
@@ -54,6 +56,7 @@ exports.login = tryCatchHelper(async (req, res) => {
     email: user?.email,
     fullName: user?.fullName,
     _id: user?._id,
+    wishlist: user?.wishlist,
   };
   return successResponse({
     res,
@@ -90,7 +93,31 @@ exports.addWishlist = tryCatchHelper(async (req, res) => {
   return successResponse({
     res,
     code: 200,
-    message: "successfully get data",
+    message: "successfully add",
+    data: result,
+  });
+});
+exports.removeWishlist = tryCatchHelper(async (req, res) => {
+  const { _id } = req.user;
+  const userId = _id?.toString();
+  const { bookId } = req.params;
+  const result = await removeWishlistService(userId, bookId);
+  return successResponse({
+    res,
+    code: 200,
+    message: "successfully removed",
+    data: result,
+  });
+});
+exports.updateWishlist = tryCatchHelper(async (req, res) => {
+  const { _id } = req.user;
+  const userId = _id?.toString();
+  const data = req.body;
+  const result = await updateWishlistService(userId, data);
+  return successResponse({
+    res,
+    code: 200,
+    message: "successfully update",
     data: result,
   });
 });
